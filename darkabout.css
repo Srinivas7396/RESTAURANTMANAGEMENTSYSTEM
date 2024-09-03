@@ -1,0 +1,559 @@
+@charset "UTF-8";
+
+/* Basic styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #131111;
+}
+
+/* Desktop Navbar styles */
+.desktop-navbar {
+    background-color: #333;
+    color: #fff;
+    position: fixed; /* Stick the navbar to the top */
+    top: 0; /* Position it at the top */
+    left: 0; /* Align it to the left */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+
+.desktop-navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+}
+
+.desktop-navbar li {
+    float: left;
+    padding: 0 50px;
+}
+
+.desktop-navbar li a {
+    display: block;
+    color: #00ff40;
+    text-align: center;
+    padding: 10px 12px;
+    text-decoration: none;
+    font-size: 25px;
+    transition: color 0.3s ease, font-size 0.3s ease;
+    font-family: 'Dancing Script', cursive;
+}
+
+ li a:hover:not(.active) {
+    color: yellow;
+    font-size: 30px;
+}
+
+
+.desktop-navbar .active {
+    color: #00ff40;
+    font-size: 30px;
+}
+
+.desktop-navbar ul li:first-child a {
+    color: orange;
+    font-size: 35px; 
+    font-family: 'Dancing Script', cursive;
+}
+
+/* Logout Button Styling */
+ .listlogout {
+    background-color: #dc3545; /* Red color */
+    color: #fff;
+    border: none;
+    padding: 12px 25px; /* Increased padding for a bigger button */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px; /* Adjusted font size */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for color and scale */
+    margin-top: 10px;
+}
+
+ .listlogout:hover {
+    background-color: #c82333; /* Darker red color on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+ .listlogout:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.3);
+}
+
+       /* Account Icon and Dropdown Menu */
+       .account {
+    position: relative;
+    display: inline-block;
+}
+
+ .account-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #00ff40;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+         .desktop-navbar .account-menu {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 3000;
+            right: 0;
+            top: 100%;
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+         .desktop-navbar .account-menu.show {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+        .desktop-navbar .account-menu p {
+           color:#00ff40 ;
+            font-size:20px;
+            padding: 12px 16px;
+            text-align: center;
+            margin: 0;
+            border-bottom: 1px solid #444;
+        }
+       .desktop-navbar .account-menu p:last-child {
+            border-bottom: none;
+        }
+    
+
+/* Mobile Navbar styles */
+.mobile-navbar {
+    display: none;
+    background-color: #333;
+    color: #fff;
+    position: fixed; /* Fixed position */
+    top: 0; /* Sticks to the top of the viewport */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensures it stays on top of other content */
+}
+
+.mobile-navbar .hamburger {
+    background-color: #333;
+    color: #00ff40;
+    border: none;
+    padding: 14px 20px;
+    font-size: 24px;
+    cursor: pointer;
+   
+}
+
+.mobile-navbar .mobile-foodie a{
+	color:orange;
+	text-decoration:none;
+}
+
+/* Dropdown Menu Styles */
+.mobile-navbar .dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    width: 100%;
+    flex-direction: column; /* Arrange items vertically */
+    z-index: 1000;
+    padding: 0;
+    border-radius: 0 0 5px 5px; /* Rounded corners at the bottom */
+}
+
+.mobile-navbar .dropdown-menu a {
+    display: block;
+    color: #00ff40; /* Same green color as the original navbar */
+    text-decoration: none;
+    padding: 14px 20px;
+    font-size: 20px; /* Adjusted font size for mobile */
+    font-family: 'Dancing Script', cursive;
+    border-bottom: 1px solid #444; /* Separator between items */
+    transition: background-color 0.3s ease, font-size 0.3s ease;
+}
+
+.mobile-navbar .dropdown-menu a:hover:not(.active) {
+    color: yellow;
+    background-color: #444; /* Background change on hover */
+    font-size: 22px;
+}
+
+.mobile-navbar .dropdown-menu a.active {
+    color: #00ff40;
+    font-size: 22px;
+}
+
+.mobile-navbar .dropdown-menu a:last-child {
+    border-bottom: none; /* Remove border from the last item */
+}
+
+/* Show the dropdown when the hamburger is clicked */
+.mobile-navbar .dropdown-menu.show {
+    display: flex; /* Flex layout for vertical alignment */
+    flex-direction: column;
+}
+
+.mobile-navbar .account {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px; /* Adjust margin as needed */
+}
+
+.mobile-navbar .account-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #00ff40;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+   margin-left:30px;
+   
+}
+
+/* Ensure the parent container is positioned relative */
+.mobile-navbar {
+    position: relative;
+}
+
+/* Default state for the mobile account menu */
+#mobileAccountMenu {
+    display: none; /* Initially hidden */
+    position: absolute; /* Position over other content */
+    background-color: #444;
+    width: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it is on top of other content */
+    left: 50%; /* Center align the menu horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    top: 100%; /* Position directly below the account icon */
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden; /* Initially hidden */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 10px;
+    color: #00ff40;
+}
+
+/* State when the menu is visible */
+#mobileAccountMenu.show {
+    display: block; /* Show the menu */
+    opacity: 1;
+    visibility: visible; /* Make it visible */
+}
+
+
+
+/* Media queries for responsiveness */
+@media (max-width: 992px) {
+    .desktop-navbar li {
+        padding: 0 20px; /* Reduce padding as screen size shrinks */
+    }
+}
+
+@media (max-width: 768px) {
+    .desktop-navbar li {
+        padding: 0 10px; /* Further reduce padding for even smaller screens */
+    }
+
+    .desktop-navbar li a {
+        font-size: 20px; /* Reduce font size for smaller screens */
+    }
+}
+
+/* Media query for mobile screens */
+ @media (max-width: 576px) {
+    .desktop-navbar {
+        display: none;
+    }
+
+    .mobile-navbar {
+        display: block;
+        position:fixed;
+    }
+
+ 
+
+    .mobile-navbar .dropdown-menu a {
+        font-size: 18px; /* Adjust font size for mobile screens */
+        padding: 14px 16px; /* Adjust padding */
+    }
+    
+       .mobile-navbar .account-icon {
+         margin-top:20px;
+            width: 32px;
+            height: 32px;
+            font-size:14px;
+            
+        }
+        
+
+        
+}
+
+  
+  
+  
+/* main and footer section 
+*/
+    h1 {
+            color: rgb(106, 243, 38);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .hero {
+            background-image: url('https://img.pikbest.com/ai/illus_our/20230413/d396ee1044c549d096b8049ae1f09be6.jpg!w700wp');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+       .hero-text p {
+            font-size: 24px;
+            color:yellow;
+        }
+
+        .about-section {
+            padding: 50px 20px;
+            background-color: #131111;
+            color: white;
+        }
+
+        .about-section .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .about-section p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .team {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .team-member h3 {
+            font-size: 20px;
+            color: gold;
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            font-size: 18px;
+        }
+
+        .about-image {
+            padding: 50px 20px;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 1000px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-section {
+            display: inline-block;
+            vertical-align: top;
+            margin: 0 50px; 
+        }
+
+        .footer p {
+            font-size: 18px; 
+        }
+        
+        
+ 
+ 
+   /* scrollbar */
+  
+/* Thin scroll bar for Firefox */
+html {
+    scrollbar-width: thin; /* Options: auto, thin, none */
+    scrollbar-color:   #00ff40 #000000; /* thumb color track color */
+}
+
+/* Width of the scroll bar */
+::-webkit-scrollbar {
+    width: 12px; /* Adjust width as needed */
+    height: 12px; /* For horizontal scroll bars */
+}
+
+/* Track of the scroll bar */
+::-webkit-scrollbar-track {
+    background: #000000; /* Background of the scroll track - black */
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Handle of the scroll bar */
+::-webkit-scrollbar-thumb {
+    background: #28a745; /* Color of the scroll handle - green */
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid #000000; /* Optional: Border to give some spacing, matching the track background */
+}
+
+/* Hover state of the scroll handle */
+::-webkit-scrollbar-thumb:hover {
+    background: #1e7e34; /* Darker shade of green on hover */
+}
+      
+
+
+
+ /* Popup Modal Styles */
+.popup-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out; /* Animation for showing the modal */
+}
+
+.popup-content {
+    background-color:rgba(236, 239, 27); /* Slightly transparent background */
+    padding: 30px 20px; /* Increased padding for better spacing */
+    border-radius: 10px; /* Rounded corners */
+    text-align: center;
+    position: relative;
+    max-width: 90%; /* Responsive width */
+    margin: 0 auto; /* Centered */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    transform: translateY(-10px);
+    transition: transform 0.3s ease-in-out; /* Animation for pop-up effect */
+    color:black;
+    font-size:25px;
+}
+
+/* Add responsive styles for smaller devices */
+@media (max-width: 576px) {
+    .popup-content {
+        width: 80%; /* Adjust width for smaller screens */
+        padding: 20px; /* Adjust padding for smaller screens */
+    }
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: black; /* White color for contrast */
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-weight: 20px;
+}
+
+ .login-link {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff; /* White text for better visibility */
+    text-decoration: none;
+    background-color: #007bff; /* Blue background for the button */
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition effect */
+    margin-top: 10px; /* Space above the button */
+}
+
+.login-link:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    color: #fff;
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Fade-in animation for the modal */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+               
+        
+        /* Prevent text selection */
+#accountInitials1 {
+    -webkit-user-select: none; /* For Chrome, Safari, and Opera */
+    -moz-user-select: none;    /* For Firefox */
+    -ms-user-select: none;     /* For Internet Explorer/Edge */
+    user-select: none;         /* Standard syntax */
+} 
+ 
+        /* Prevent text selection */
+#accountInitials2 {
+    -webkit-user-select: none; /* For Chrome, Safari, and Opera */
+    -moz-user-select: none;    /* For Firefox */
+    -ms-user-select: none;     /* For Internet Explorer/Edge */
+    user-select: none;         /* Standard syntax */
+}       
+        
