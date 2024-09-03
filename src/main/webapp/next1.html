@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <style>
+        /* CSS for styling the order summary table */
+        body {
+            font-family: Arial, sans-serif;
+             background-color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        thead {
+            background-color: #007bff;
+            color: #fff;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .no-items {
+            text-align: center;
+            font-weight: bold;
+            padding: 20px;
+            color: #777;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        #totalAmount {
+            font-size: 1.5em;
+            color:rgb(31, 191, 240);
+            text-align:center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Summary</h1>
+    <!-- Wrap the table inside a form -->
+    <form id="orderForm" action="OrderServlet" method="POST">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Order rows will be inserted here -->
+            </tbody>
+        </table>
+        <h2>Total Bill: <span id="totalAmount">₹0.00</span></h2>
+
+        <!-- Hidden inputs to store order data -->
+        <input type="hidden" name="orderData" id="orderData">
+        <input type="hidden" name="totalAmount" id="totalAmountInput">
+
+<div style="text-align: center; margin-top: 20px;">
+    <label style="margin-right: 20px; font-weight: bold; font-size: 18px; color: #fff;">
+        <input type="radio" name="orderMode" value="Parcel" required 
+               style="display: none;">
+        <span style="display: inline-block; padding: 10px 20px; border: 2px solid #fff; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, color 0.3s;">
+            Parcel
+        </span>
+    </label>
+    <label style="font-weight: bold; font-size: 18px; color: #fff;">
+        <input type="radio" name="orderMode" value="Eat In" required 
+               style="display: none;">
+        <span style="display: inline-block; padding: 10px 20px; border: 2px solid #fff; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, color 0.3s;">
+            Eat In
+        </span>
+    </label>
+</div>
+
+        <!-- Pay Button -->
+        <div style="text-align: center; margin-top: 20px;">
+            <button type="submit" id="payButton">Pay</button>
+        </div>
+    </form>
+
+    <script>
+        // Retrieve quantities data and total amount from local storage
+        const quantities = JSON.parse(localStorage.getItem('quantities')) || {};
+        let totalAmount = 0;
+
+        // Debugging: Check the retrieved values
+        console.log('Quantities:', quantities);
+
+        const orderTableBody = document.getElementById('orderTableBody');
+
+        // Function to create table rows for each item
+        function displayOrderSummary() {
+            totalAmount = 0;
+            orderTableBody.innerHTML = ''; // Clear existing rows
+
+            // Check if quantities object is empty
+            if (Object.keys(quantities).length === 0) {
+                // Display no items message
+                orderTableBody.innerHTML = '<tr><td colspan="4" class="no-items">No items to display. Please select items from the menu.</td></tr>';
+                document.getElementById('totalAmount').innerText = `₹0.00`;
+            } else {
+                for (const key in quantities) {
+                    if (quantities.hasOwnProperty(key)) {
+                        const item = quantities[key];
+                        const itemTotal = item.quantity * item.price;
+                        totalAmount += itemTotal;
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.name}</td>
+                            <td>${item.quantity}</td>
+                            <td>₹${item.price.toFixed(2)}</td>
+                            <td>₹${itemTotal.toFixed(2)}</td>
+                        `;
+                        orderTableBody.appendChild(row);
+                    }
+                }
+
+                // Update total amount in the UI
+                document.getElementById('totalAmount').innerText = `₹${totalAmount.toFixed(2)}`;
+                // Update total amount in the hidden input
+                document.getElementById('totalAmountInput').value = totalAmount.toFixed(2);
+            }
+        }
+
+        // Display the order summary when the page loads
+        displayOrderSummary();
+
+        // Prepare the data for submission
+        document.getElementById('payButton').addEventListener('click', function() {
+            console.log('Pay button clicked'); // Debugging: Check if button click is detected
+
+            // Convert quantities to JSON string for hidden input
+            const orderData = {
+                quantities: quantities,
+                totalAmount: totalAmount,
+                timestamp: new Date().toISOString() // Add current timestamp
+            };
+
+            // Debugging: Check the data being sent
+            console.log('Order Data:', orderData);
+
+            // Assign JSON string to hidden input
+            document.getElementById('orderData').value = JSON.stringify(orderData);
+        });
+        
+        // Add JavaScript to handle the active state when a radio button is selected
+        document.querySelectorAll('input[name="orderMode"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('input[name="orderMode"]').forEach(function(otherRadio) {
+                    otherRadio.nextElementSibling.style.backgroundColor = '';
+                    otherRadio.nextElementSibling.style.color = '#fff';
+                });
+                this.nextElementSibling.style.backgroundColor = '#fff';
+                this.nextElementSibling.style.color = '#333';
+            });
+        });
+    </script>
+</body>
+</html>
